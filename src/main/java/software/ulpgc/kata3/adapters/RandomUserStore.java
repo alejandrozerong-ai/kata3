@@ -35,7 +35,7 @@ public class RandomUserStore implements UserStore {
     }
 
     private List<User> loadFrom(URI uri) throws IOException, InterruptedException {
-        return loadFrom(createRequestFor(uri))
+        return loadFrom(createRequestFor(uri));
 
     }
 
@@ -79,7 +79,7 @@ public class RandomUserStore implements UserStore {
         String formattedDate = rawDate.length() > 10 ? rawDate.substring(0, 10) : rawDate;
 
         return new User(
-                dto.name.first + "" + dto.name.last,
+                dto.name.first + " " + dto.name.last,
                 formattedDate,
                 dto.dob.age
         );
