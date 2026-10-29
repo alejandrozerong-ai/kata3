@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.sun.net.httpserver.Request;
 import software.ulpgc.kata3.UserDto;
 import software.ulpgc.kata3.domain.model.User;
+import software.ulpgc.kata3.ports.UserStore;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,7 +17,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandomUserStore {
+public class RandomUserStore implements UserStore {
     private final int size;
 
     public RandomUserStore(int size) {
@@ -39,8 +40,7 @@ public class RandomUserStore {
     }
 
     private List<User> loadFrom(HttpRequest request) throws IOException, InterruptedException {
-        try {
-            HttpClient client = HttpClient.newHttpClient();
+        try (HttpClient client = HttpClient.newHttpClient()){
             return loadFrom(client.send(request, HttpResponse.BodyHandlers.ofString()).body());
         }
     }
