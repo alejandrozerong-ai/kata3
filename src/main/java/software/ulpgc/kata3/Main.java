@@ -17,7 +17,6 @@ public class Main {
         UserResponseDto response = new UserResponseDto(users);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String jsonOutput = gson.toJson(response);
-        System.out.println(jsonOutput);
+        System.out.println(gson.toJson(response));
     }
 }

@@ -29,7 +29,7 @@ public class RandomUserStore implements UserStore {
     @Override
     public List<User> load() {
         try {
-            return loadFrom(new URI("http://randomuser.me/api?results=" + size));
+            return loadFrom(new URI("https://randomuser.me/api?results=" + size));
 
         } catch (Exception e)  {
             throw new RuntimeException(e);
@@ -77,9 +77,13 @@ public class RandomUserStore implements UserStore {
         if (dto.name == null || dto.dob == null || dto.dob.date == null) {
             return null;
         }
+
+        String rawDate = dto.dob.date;
+        String formattedDate = rawDate.length() > 10 ? rawDate.substring(0, 10) : rawDate;
+
         return new User(
                 dto.name.first + " " + dto.name.last,
-                Instant.parse(dto.dob.date)
+                formattedDate
         );
     }
 
