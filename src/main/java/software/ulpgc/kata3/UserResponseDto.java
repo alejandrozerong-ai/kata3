@@ -1,4 +1,4 @@
-package software.ulpgc.kata3.adapters;
+package software.ulpgc.kata3;
 
 import software.ulpgc.kata3.domain.model.User;
 
