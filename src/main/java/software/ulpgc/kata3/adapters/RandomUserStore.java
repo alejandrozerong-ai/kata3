@@ -1,23 +1,18 @@
 package software.ulpgc.kata3.adapters;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import software.ulpgc.kata3.UserDto;
 import software.ulpgc.kata3.domain.model.User;
-import software.ulpgc.kata3.ports.UserDisplay;
 import software.ulpgc.kata3.ports.UserStore;
 
 import java.io.IOException;
-import java.io.InterruptedIOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.LongUnaryOperator;
 
 public class RandomUserStore implements UserStore {
     private final int size;
@@ -30,10 +25,11 @@ public class RandomUserStore implements UserStore {
     public List<User> load() {
         try {
             return loadFrom(new URI("https://randomuser.me/api?results=" + size));
-
-        } catch (Exception e)  {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
     private List<User> loadFrom(URI uri) throws IOException, InterruptedException {
@@ -44,12 +40,11 @@ public class RandomUserStore implements UserStore {
         try (HttpClient client = HttpClient.newHttpClient()) {
             return loadFrom(client.send(request, HttpResponse.BodyHandlers.ofString()).body());
         }
-
     }
 
     private List<User> loadFrom(String json) {
         JsonElement results = new Gson().fromJson(json, JsonObject.class).get("results");
-        if (results == null || !results.isJsonArray()) {
+        if (results == null || ! results.isJsonArray()) {
             return new ArrayList<>();
         }
         return loadFrom(results.getAsJsonArray());
@@ -78,12 +73,14 @@ public class RandomUserStore implements UserStore {
             return null;
         }
 
-        String rawDate = dto.dob.date;
+        String rawDate =dto.dob.date;
         String formattedDate = rawDate.length() > 10 ? rawDate.substring(0, 10) : rawDate;
 
         return new User(
                 dto.name.first + " " + dto.name.last,
-                formattedDate
+                formattedDate,
+                dto.dob.age,
+                dto.gender
         );
     }
 

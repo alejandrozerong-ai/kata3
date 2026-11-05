@@ -10,12 +10,13 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        UserStore userStore = new RandomUserStore(5);
+        UserStore userStore = new RandomUserStore(20);
         List<User> users = userStore.load();
 
         UserResponseDto response = new UserResponseDto(users);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
         System.out.println(gson.toJson(response));
     }
 }

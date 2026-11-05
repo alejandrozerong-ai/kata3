@@ -1,5 +1,7 @@
 package software.ulpgc.kata3;
 
+import javax.naming.Name;
+
 public class UserDto {
     public String gender;
     public Name name;
@@ -21,4 +23,5 @@ public class UserDto {
     public static class Picture {
         public String large;
     }
+
 }

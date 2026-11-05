@@ -7,7 +7,7 @@ import java.util.List;
 
 public class UserResponseDto {
     public Metadata metadata;
-    public List<User> users;
+    public List<User>  users;
 
     public static class Metadata {
         public int totalCount;
